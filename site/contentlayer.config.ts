@@ -5,9 +5,9 @@ import type { LineElement } from "rehype-pretty-code";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import { visit } from "unist-util-visit";
-import { generateToc } from "./contentlayer/generateToc";
-import { navitaCompile } from "./contentlayer/navitaCompile";
-import { removeFirstHeading } from "./contentlayer/removeFirstHeading";
+import { generateToc } from "./src/mdx/generateToc";
+import { navitaCompile } from "./src/mdx/navitaCompile";
+import { removeFirstHeading } from "./src/mdx/removeFirstHeading";
 
 const orderRegex = /^((\d+)-)?(.*)$/;
 const urlFromFlattenedPath = (filePath: string) => {
