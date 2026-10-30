@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Nunito } from 'next/font/google';
+import { exampleCollection } from "../../qino/collections/examples";
 import { Container } from '@/components/container';
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -8,8 +9,9 @@ import { Main } from "@/components/layout/main";
 import { Responsive } from '@/components/layout/responsive';
 import { SidebarNav } from '@/components/layout/sidebarNav';
 import { Theme } from "@/components/layout/theme";
+import { Mdx } from "@/components/mdx";
 import { buildDocumentationTree } from "@/utils/buildDocumentationTree";
-import { allDocs } from "contentlayer/generated";
+import { getAllDocs } from "@/utils/getAllDocs";
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -31,7 +33,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: Props) {
+  const [allDocs, allExamples] = await Promise.all([
+    getAllDocs(),
+    exampleCollection.getEntries(),
+  ]);
   const tree = buildDocumentationTree(allDocs);
 
   return (
@@ -48,6 +54,14 @@ export default function RootLayout({ children }: Props) {
           <Hero
             title="CSS-in-JS with zero runtime"
             description="Type-safe compile time Atomic CSS-in-JS with zero runtime."
+            examples={allExamples.map((example) => (
+              // @ts-expect-error Async Server Component
+              <Mdx
+                key={example._meta.slug}
+                source={example.markdown}
+                flattenedPath={`examples/${example._meta.slug}`}
+              />
+            ))}
           />
           <Container>
             <Responsive>

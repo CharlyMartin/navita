@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { Article } from "@/components/article";
 import { Toc } from "@/components/toc";
+import { generateToc } from "@/mdx/generateToc";
+import { getAllDocs } from "@/utils/getAllDocs";
 import { getDocumentFromParams } from "@/utils/getDocumentFromParams";
-import { allDocs } from "contentlayer/generated";
 
 type Props = {
   params: {
@@ -10,14 +11,18 @@ type Props = {
   };
 };
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
+  const allDocs = await getAllDocs();
+
   return allDocs.filter((x) => x.display).map((doc) => ({
     slug: doc.slugAsParams.split('/')
   }));
 }
 
 export async function generateMetadata({ params }: Props) {
-  const result = getDocumentFromParams(params);
+  const result = await getDocumentFromParams(params);
 
   if (!result) {
     return {};
@@ -31,26 +36,28 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default function DocumentPage({ params }: Props) {
-  const result = getDocumentFromParams(params);
+export default async function DocumentPage({ params }: Props) {
+  const result = await getDocumentFromParams(params);
 
   if (!result) {
     notFound();
   }
 
   const { doc, pager } = result;
+  const toc = await generateToc(doc.markdown);
 
   return (
     <>
       <Article
         title={doc.title}
-        code={doc.body.code}
+        source={doc.markdown}
+        flattenedPath={doc.flattenedPath}
         description={doc.description}
-        length={doc.body.raw.length}
+        length={doc.markdown.length}
         pager={pager}
       />
       <div>
-        <Toc items={doc.toc} />
+        <Toc items={toc} />
       </div>
     </>
   );

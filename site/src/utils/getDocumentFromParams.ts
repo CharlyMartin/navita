@@ -1,9 +1,10 @@
 import { buildDocumentationTree } from "@/utils/buildDocumentationTree";
+import { getAllDocs } from "@/utils/getAllDocs";
 import { getPagerForDoc } from "@/utils/getPagerForDoc";
-import { allDocs } from "contentlayer/generated";
 
-export function getDocumentFromParams(params: { slug: string[] }) {
+export async function getDocumentFromParams(params: { slug: string[] }) {
   const slug = params.slug?.join('/') || '';
+  const allDocs = await getAllDocs();
   const doc = allDocs.find((doc) => doc.slugAsParams === slug);
 
   if (!doc) {

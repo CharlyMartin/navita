@@ -4,8 +4,6 @@ import { merge, style } from "@navita/css";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/container";
 import { vars } from "@/components/layout/theme";
-import { Mdx } from "@/components/mdx";
-import { allExamples } from "contentlayer/generated";
 
 const section = style({
   paddingTop: '2.5rem',
@@ -64,9 +62,10 @@ const p = style({
 interface Props {
   title: string;
   description?: string;
+  examples: React.ReactNode[];
 }
 
-export const Hero = ({ title, description }: Props) => {
+export const Hero = ({ title, description, examples }: Props) => {
   // If someone has a better idea for this, please let me know.
   // Maybe parallell routing?
   // I couldn't get it to work.
@@ -76,7 +75,7 @@ export const Hero = ({ title, description }: Props) => {
     return null;
   }
 
-  const randomExample = allExamples[Math.floor(Math.random() * allExamples.length)];
+  const randomExample = examples[Math.floor(Math.random() * examples.length)];
 
   return (
     <section className={section}>
@@ -86,7 +85,7 @@ export const Hero = ({ title, description }: Props) => {
           {description && (<p className={p}>{description}</p>)}
         </div>
         <div className={column}>
-          <Mdx code={randomExample.body.code} />
+          {randomExample}
         </div>
       </Container>
     </section>

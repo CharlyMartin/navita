@@ -1,14 +1,5 @@
+import type { Doc } from "@/utils/getAllDocs";
 import { sortDocs } from "@/utils/sortDocs";
-import type { Doc } from 'contentlayer/generated';
-
-interface PathSegment {
-  pathName: string;
-  order: number;
-}
-
-interface BetterDoc extends Doc {
-  pathSegments: PathSegment[];
-}
 
 export interface DocTree {
   id: string;
@@ -16,11 +7,11 @@ export interface DocTree {
   title: string;
   slug: string;
   slugAsParams?: string;
-  doc?: BetterDoc;
+  doc?: Doc;
   children: DocTree[];
 }
 
-export const buildDocumentationTree = (docs: BetterDoc[]): DocTree[] => {
+export const buildDocumentationTree = (docs: Doc[]): DocTree[] => {
   const sorted = docs.sort(sortDocs);
   const rootNodes: DocTree[] = [];
   const pathMap = new Map<string, DocTree[]>([['', rootNodes]]);

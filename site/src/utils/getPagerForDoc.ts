@@ -1,5 +1,5 @@
+import type { Doc } from "@/utils/getAllDocs";
 import { sortDocs } from "@/utils/sortDocs";
-import type { Doc } from "contentlayer/generated";
 
 export interface Pager {
   prev?: Doc;
