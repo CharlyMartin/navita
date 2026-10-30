@@ -1,7 +1,4 @@
-"use client";
-
 import { merge, style } from "@navita/css";
-import { usePathname } from "next/navigation";
 import { Container } from "@/components/container";
 import { vars } from "@/components/layout/theme";
 
@@ -62,21 +59,10 @@ const p = style({
 interface Props {
   title: string;
   description?: string;
-  examples: React.ReactNode[];
+  children: React.ReactNode;
 }
 
-export const Hero = ({ title, description, examples }: Props) => {
-  // If someone has a better idea for this, please let me know.
-  // Maybe parallell routing?
-  // I couldn't get it to work.
-  const pathname = usePathname();
-
-  if (pathname !== '/') {
-    return null;
-  }
-
-  const randomExample = examples[Math.floor(Math.random() * examples.length)];
-
+export const Hero = ({ title, description, children }: Props) => {
   return (
     <section className={section}>
       <Container className={container}>
@@ -85,7 +71,7 @@ export const Hero = ({ title, description, examples }: Props) => {
           {description && (<p className={p}>{description}</p>)}
         </div>
         <div className={column}>
-          {randomExample}
+          {children}
         </div>
       </Container>
     </section>

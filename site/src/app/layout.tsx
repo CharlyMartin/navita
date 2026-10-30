@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter, Nunito } from 'next/font/google';
-import { exampleCollection } from "../../qino/collections/examples";
 import { Container } from '@/components/container';
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { Hero } from "@/components/layout/hero";
 import { Main } from "@/components/layout/main";
 import { Responsive } from '@/components/layout/responsive';
 import { SidebarNav } from '@/components/layout/sidebarNav';
 import { Theme } from "@/components/layout/theme";
-import { Mdx } from "@/components/mdx";
 import { getNavigation } from "@/utils/docs";
 
 const fontSans = Inter({
@@ -30,13 +27,11 @@ export const metadata: Metadata = {
 
 interface Props {
   children: React.ReactNode;
+  hero: React.ReactNode;
 }
 
-export default async function RootLayout({ children }: Props) {
-  const [navigation, allExamples] = await Promise.all([
-    getNavigation(),
-    exampleCollection.getEntries(),
-  ]);
+export default async function RootLayout({ children, hero }: Props) {
+  const navigation = await getNavigation();
 
   return (
     <Theme>
@@ -49,17 +44,7 @@ export default async function RootLayout({ children }: Props) {
       >
         <body>
           <Header />
-          <Hero
-            title="CSS-in-JS with zero runtime"
-            description="Type-safe compile time Atomic CSS-in-JS with zero runtime."
-            examples={allExamples.map((example) => (
-              <Mdx
-                key={example._meta.slug}
-                source={example.markdown}
-                flattenedPath={`examples/${example._meta.slug}`}
-              />
-            ))}
-          />
+          {hero}
           <Container>
             <Responsive>
               <SidebarNav navigation={navigation} />
