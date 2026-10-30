@@ -1,4 +1,4 @@
-import { evaluate, type EvaluateOptions } from "@mdx-js/mdx";
+import { evaluate } from "@mdx-js/mdx";
 import { merge, style } from "@navita/css";
 import type { MDXComponents } from 'mdx/types';
 import Image from "next/image";
@@ -341,8 +341,7 @@ interface MdxProps {
 
 export async function Mdx({ source, flattenedPath }: MdxProps) {
   const { default: Component } = await evaluate(source, {
-    // @types/react@18.2 doesn't declare the jsx-runtime exports
-    ...(runtime as Pick<EvaluateOptions, 'Fragment' | 'jsx' | 'jsxs'>),
+    ...runtime,
     rehypePlugins: getRehypePlugins(flattenedPath),
   });
 
