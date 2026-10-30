@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { documentationTree } from "../../qino/trees/documentation";
 import { urlFromFlattenedPath } from "@/utils/urlFromFlattenedPath";
 
@@ -9,7 +10,7 @@ function getDocUrl(slug: string) {
 }
 
 // Section anchors have children and aren't pages
-export async function getDocPages() {
+export const getDocPages = cache(async () => {
   const nodes = await documentationTree.getFlatTree();
 
   return nodes
@@ -19,9 +20,9 @@ export async function getDocPages() {
       title: node.title,
       url: getDocUrl(node.slug),
     }));
-}
+});
 
-export async function getNavigation() {
+export const getNavigation = cache(async () => {
   const sections = await documentationTree.getTree();
 
   return sections.map((section) => ({
@@ -31,11 +32,11 @@ export async function getNavigation() {
       url: getDocUrl(node.slug),
     })),
   }));
-}
+});
 
 export type Navigation = Awaited<ReturnType<typeof getNavigation>>;
 
-export async function getDoc(url: string) {
+export const getDoc = cache(async (url: string) => {
   const pages = await getDocPages();
   const index = pages.findIndex((page) => page.url == url);
 
@@ -56,6 +57,6 @@ export async function getDoc(url: string) {
       next: pages[index + 1],
     },
   };
-}
+});
 
 export type Pager = NonNullable<Awaited<ReturnType<typeof getDoc>>>['pager'];
