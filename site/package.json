@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "qino build && next dev",
-    "build": "qino build && next build",
+    "dev": "qino build && next dev --webpack",
+    "build": "qino build && next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "rimraf content/documentation && shx ln -s ../../documentation content/documentation"
@@ -13,9 +13,9 @@
     "@mdx-js/mdx": "^3.1.1",
     "@navita/css": "workspace:*",
     "@qino/cms": "^0.16.0",
-    "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
@@ -24,8 +24,8 @@
     "@types/hast": "3.0.0",
     "@types/mdx": "^2.0.5",
     "@types/node": "20.4.8",
-    "@types/react": "18.2.18",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "mdast-util-toc": "^7.0.0",

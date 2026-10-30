@@ -59,7 +59,6 @@ export const Article = ({ title, description, source, flattenedPath, pager, leng
       {length === undefined || length > 0 && (
         <>
           <hr className={hr} />
-          {/* @ts-expect-error Async Server Component */}
           <Mdx source={source} flattenedPath={flattenedPath} />
         </>
       )}

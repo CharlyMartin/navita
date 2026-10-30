@@ -6,9 +6,9 @@ import { getAllDocs } from "@/utils/getAllDocs";
 import { getDocumentFromParams } from "@/utils/getDocumentFromParams";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string[];
-  };
+  }>;
 };
 
 export const dynamicParams = false;
@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const result = await getDocumentFromParams(params);
+  const result = await getDocumentFromParams(await params);
 
   if (!result) {
     return {};
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function DocumentPage({ params }: Props) {
-  const result = await getDocumentFromParams(params);
+  const result = await getDocumentFromParams(await params);
 
   if (!result) {
     notFound();

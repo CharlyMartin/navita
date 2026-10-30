@@ -55,7 +55,6 @@ export default async function RootLayout({ children }: Props) {
             title="CSS-in-JS with zero runtime"
             description="Type-safe compile time Atomic CSS-in-JS with zero runtime."
             examples={allExamples.map((example) => (
-              // @ts-expect-error Async Server Component
               <Mdx
                 key={example._meta.slug}
                 source={example.markdown}
