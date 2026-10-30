@@ -6,7 +6,7 @@
     "dev": "qino build && next dev --webpack",
     "build": "qino build && next build --webpack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "postinstall": "rimraf content/documentation && shx ln -s ../../documentation content/documentation"
   },
   "dependencies": {
