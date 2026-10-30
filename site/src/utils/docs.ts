@@ -2,7 +2,7 @@ import { cache } from "react";
 import { documentationTree } from "../../qino/trees/documentation";
 import { urlFromFlattenedPath } from "@/utils/urlFromFlattenedPath";
 
-// "100-overview/100-getting-started" → "/", "300-api/101-globalStyle" → "/api/global-style"
+// "overview/getting-started" → "/", "api/globalStyle" → "/api/global-style"
 function getDocUrl(slug: string) {
   const path = urlFromFlattenedPath(slug).replace(/^overview\//, '');
 
