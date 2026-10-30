@@ -8,6 +8,5 @@ export const documentationTree = qino.defineTree({
   schema: z.object({
     title: z.string(),
     description: z.string().nullable().optional(),
-    display: z.boolean().optional(),
   }),
 });

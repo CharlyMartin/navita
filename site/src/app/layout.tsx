@@ -10,8 +10,7 @@ import { Responsive } from '@/components/layout/responsive';
 import { SidebarNav } from '@/components/layout/sidebarNav';
 import { Theme } from "@/components/layout/theme";
 import { Mdx } from "@/components/mdx";
-import { buildDocumentationTree } from "@/utils/buildDocumentationTree";
-import { getAllDocs } from "@/utils/getAllDocs";
+import { getNavigation } from "@/utils/docs";
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -34,11 +33,10 @@ interface Props {
 }
 
 export default async function RootLayout({ children }: Props) {
-  const [allDocs, allExamples] = await Promise.all([
-    getAllDocs(),
+  const [navigation, allExamples] = await Promise.all([
+    getNavigation(),
     exampleCollection.getEntries(),
   ]);
-  const tree = buildDocumentationTree(allDocs);
 
   return (
     <Theme>
@@ -64,7 +62,7 @@ export default async function RootLayout({ children }: Props) {
           />
           <Container>
             <Responsive>
-              <SidebarNav tree={tree} />
+              <SidebarNav navigation={navigation} />
               <Main>{children}</Main>
             </Responsive>
           </Container>
